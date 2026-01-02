@@ -90,6 +90,9 @@ def load_or_create_dataset():
 def main():
     """Main function to run the ensemble model training and evaluation."""
     
+    # Configurable sampling strategies to test
+    SAMPLING_STRATEGIES = ['smote', 'smotetomek', 'none']
+    
     print("="*60)
     print("ENSEMBLE SAMPLING MODEL FOR CLASS IMBALANCE CLASSIFICATION")
     print("="*60)
@@ -113,13 +116,11 @@ def main():
     X_test_scaled = scaler.transform(X_test)
     
     # Test different sampling strategies
-    sampling_strategies = ['smote', 'smotetomek', 'none']
-    
     best_strategy = None
     best_score = 0
     best_model = None
     
-    for strategy in sampling_strategies:
+    for strategy in SAMPLING_STRATEGIES:
         print("\n" + "="*60)
         print(f"TESTING SAMPLING STRATEGY: {strategy.upper()}")
         print("="*60)

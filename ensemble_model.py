@@ -251,8 +251,8 @@ class EnsembleSamplingModel:
             if len(np.unique(y_test)) == 2:
                 roc_auc = roc_auc_score(y_test, y_proba[:, 1])
                 print(f"ROC AUC Score: {roc_auc:.4f}")
-        except Exception:
-            pass
+        except (ValueError, IndexError) as e:
+            print(f"ROC AUC could not be calculated: {str(e)}")
         
         print("\nClassification Report:")
         print(classification_report(y_test, y_pred))

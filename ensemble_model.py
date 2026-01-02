@@ -4,8 +4,7 @@ This module trains multiple ML models and creates an ensemble of the best 2.
 """
 
 import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
     classification_report, confusion_matrix, roc_auc_score,
     f1_score, precision_score, recall_score, balanced_accuracy_score
@@ -18,7 +17,6 @@ from xgboost import XGBClassifier
 from imblearn.over_sampling import SMOTE, ADASYN
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.combine import SMOTEENN, SMOTETomek
-from imblearn.pipeline import Pipeline as ImbPipeline
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -194,16 +192,8 @@ class EnsembleSamplingModel:
             n_jobs=-1
         )
         
-        # Train ensemble on full resampled training data
-        if X_val is not None:
-            # Combine train and validation back
-            X_full = np.vstack([X_train_resampled, X_val])
-            y_full = np.hstack([y_train_resampled, y_val])
-        else:
-            X_full = X_train_resampled
-            y_full = y_train_resampled
-            
-        self.ensemble.fit(X_full, y_full)
+        # Train ensemble on resampled training data only (not validation)
+        self.ensemble.fit(X_train_resampled, y_train_resampled)
         print("Ensemble model trained successfully!")
         
         return self

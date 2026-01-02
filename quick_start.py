@@ -49,7 +49,10 @@ print(f"Accuracy:  {metrics['accuracy']:.4f}")
 print(f"Precision: {metrics['precision']:.4f}")
 print(f"Recall:    {metrics['recall']:.4f}")
 print(f"F1-Score:  {metrics['f1_score']:.4f}")
-print(f"ROC-AUC:   {metrics.get('roc_auc', 'N/A'):.4f}" if 'roc_auc' in metrics else "ROC-AUC: N/A")
+if 'roc_auc' in metrics:
+    print(f"ROC-AUC:   {metrics['roc_auc']:.4f}")
+else:
+    print("ROC-AUC:   N/A")
 print("=" * 80)
 
 print("\n✓ Quick start example completed successfully!")
